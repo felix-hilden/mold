@@ -1,7 +1,7 @@
 """
-Package docstring.
+Package / repository initialisation.
 
-See online documentation at `RTD <http://nonexistentproject.rtfd.org>`_.
+See online documentation at `RTD <http://pymold.rtfd.org>`_.
 """
 import os as _os
 from pathlib import Path as _Path

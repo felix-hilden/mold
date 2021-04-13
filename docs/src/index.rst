@@ -1,4 +1,4 @@
-=======
-Package
-=======
-Welcome to the documentation of Package!
+Mold
+====
+
+Welcome to the documentation of Mold!

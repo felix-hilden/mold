@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with Package
+about: Report a problem with Mold
 labels: bug
 ---
 
@@ -15,5 +15,5 @@ This happened.
 This should have happened instead.
 
 ### Steps to reproduce
-If applicable and possible, please provide a
-[minimal working example](https://stackoverflow.com/help/minimal-reproducible-example).
+If applicable and possible, please provide a [minimal working
+example](https://stackoverflow.com/help/minimal-reproducible-example).

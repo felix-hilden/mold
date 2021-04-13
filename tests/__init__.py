@@ -1,6 +1,6 @@
-import package
+import mold
 
 
 class TestPackage:
     def test(self):
-        assert package.__version__
+        assert mold.__version__

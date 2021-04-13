@@ -2,25 +2,18 @@ import setuptools
 import os
 from pathlib import Path
 
-"""
-See the following resources:
-* https://setuptools.readthedocs.io/en/latest/setuptools.html
-* https://docs.python.org/3.7/distutils/setupscript.html
-"""
-
 root = Path(os.path.realpath(__file__)).parent
-version_file = root / 'package' / 'VERSION'
+version_file = root / 'mold' / 'VERSION'
 readme_file = root / 'readme.rst'
 
-pypi_url = 'https://pypi.org/project/python-package'
-github_url = 'https://github.com/felix-hilden/python-package'
-documentation_url = 'https://nonexistentproject.rtfd.org'
+pypi_url = 'https://pypi.org/project/mold'
+github_url = 'https://github.com/felix-hilden/mold'
+documentation_url = 'https://pymold.rtfd.org'
 
 extras_require = {
     'docs': [
         'sphinx',
         'sphinx-rtd-theme',
-        'sphinx-autodoc-typehints'
     ],
     'tests': [
         'coverage',
@@ -40,9 +33,9 @@ extras_require['dev'] = (
 )
 
 setuptools.setup(
-    name='python-package',
+    name='mold',
     version=version_file.read_text().strip(),
-    description='Python package template',
+    description='Package / repository initialisation',
     long_description=readme_file.read_text(),
     long_description_content_type='text/x-rst',
 
@@ -60,11 +53,11 @@ setuptools.setup(
     maintainer_email='felix.hilden@gmail.com',
 
     license='MIT',
-    keywords='python package template',
+    keywords='package repository template initialisation',
     packages=setuptools.find_packages(exclude=('tests', 'tests.*',)),
     include_package_data=True,
     package_data={
-        'package': ['VERSION']
+        'mold': ['VERSION']
     },
 
     python_requires='>=3.6',
