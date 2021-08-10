@@ -1,0 +1,33 @@
+from typing import List
+from collections import defaultdict
+
+from mold import Interface, Question
+from .domain import module
+
+
+class Provides:
+    custom_provides: str = ""
+
+
+class Accepts:
+    custom_accepts: List[str] = defaultdict(list)
+
+
+questions = [
+    Question("custom_question", "input something for the plugin"),
+]
+
+
+def post_dialog():
+    Provides.custom_provides = questions[0].response
+
+
+interface = Interface(
+    module,
+    "custom interface",
+    "a new Mold interface",
+    Provides,
+    Accepts,
+    questions=questions,
+    post_dialog=post_dialog,
+)

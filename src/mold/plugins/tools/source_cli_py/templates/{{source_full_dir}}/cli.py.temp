@@ -1,0 +1,3 @@
+def main():
+    from . import __version__
+    print(f"{{ project_slug }} v{{__version__}}")

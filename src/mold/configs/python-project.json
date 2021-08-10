@@ -1,0 +1,12 @@
+{
+    "domain": "mold_builtin-Python",
+    "tools": [
+        "mold_builtin-minimal gitignore",
+        "mold_builtin-MIT",
+        "mold_builtin-python module",
+        "mold_builtin-setuptools",
+        "mold_builtin-pytest+tox",
+        "mold_builtin-rst readme",
+        "mold_builtin-rst todo"
+    ]
+}

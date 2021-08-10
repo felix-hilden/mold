@@ -1,0 +1,8 @@
+from mold import Domain, hook
+
+module = '{{ project_slug }}'
+domain = Domain(
+    module,
+    "custom domain",
+    "a new Mold domain",
+)

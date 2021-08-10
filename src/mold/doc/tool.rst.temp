@@ -1,0 +1,12 @@
+{{ s.name }}
+{{ '*' * (s.name | length) }}
+Location: ``{{ import_location }}``
+
+{{ s.description.capitalize() }}.
+
+{%- if s.depends %}
+
+Depends on:
+{% for thing in s.depends %}
+- {{ thing }}{% endfor %}
+{%- endif %}

@@ -1,0 +1,10 @@
+{% for sec, items in gitignore_sections.items() -%}
+# {{ sec }}
+{% for item in items %}{{ item }}
+{% endfor %}
+{% endfor -%}
+{% if gitignore_items -%}
+# Misc
+{% for item in gitignore_items %}{{ item }}
+{% endfor %}
+{%- endif %}

@@ -1,0 +1,19 @@
+{
+    "domain": "mold_builtin-Python",
+    "tools": [
+        "mold_builtin-gitignore for Python",
+        "mold_builtin-MIT",
+        "mold_builtin-Mold plugin",
+        "mold_builtin-python module",
+        "mold_builtin-setuptools",
+        "mold_builtin-pytest+tox",
+        "mold_builtin-github+templates",
+        "mold_builtin-contributing Python+GitHub",
+        "mold_builtin-github actions",
+        "mold_builtin-pypi readme",
+        "mold_builtin-rst readme",
+        "mold_builtin-sphinx",
+        "mold_builtin-rtd",
+        "mold_builtin-rst todo"
+    ]
+}

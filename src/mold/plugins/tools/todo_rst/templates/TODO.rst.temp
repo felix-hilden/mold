@@ -1,0 +1,6 @@
+{{ project_name }} TODO
+{{ '=' * (project_name|length()) }}=====
+
+{% for item in todo_items -%}
+- {{ item }}
+{% endfor %}

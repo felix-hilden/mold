@@ -1,0 +1,56 @@
+import setuptools
+import os
+from pathlib import Path
+
+root = Path(os.path.realpath(__file__)).parent
+version_file = root / {% if source_use_src_dir %}"src" / {% endif %}"{{ project_slug }}" / "VERSION"
+readme_file = root / "
+{%- if build_readme_file %}{{ build_readme_file }}
+{%- else %}readme.rst
+{%- endif %}"
+
+extras_require = { {%- for category, items in build_extra_deps.items() %}
+    "{{ category }}": [{% for item in items %}
+        "{{ item }}",{% endfor %}
+    ],{% endfor %}
+}
+extras_require["dev"] = sum(extras_require.values(), [])
+
+setuptools.setup(
+    name="{{ project_slug }}",
+    version=version_file.read_text().strip(),
+    license="{{ license_shorthand }}",
+    description="{{ readme_description }}",
+    keywords="{{ build_keywords }}",
+    long_description=readme_file.read_text(),
+    long_description_content_type="text/x-rst",
+
+    url="{{ build_url }}",
+    download_url="{{ build_download_url }}",
+    project_urls={ {%- for name, url in build_project_urls.items() %}
+        "{{ name }}": "{{ url }}",{% endfor %}
+    },
+
+    author="{{ license_author }}",
+    author_email="{{ build_email }}",
+    maintainer="{{ license_author }}",
+    maintainer_email="{{ build_email }}",
+
+    packages=setuptools.find_packages(
+{%- if source_use_src_dir %}where="src"{% else %}exclude=("tests", "tests.*"){% endif %}),
+{%- if source_use_src_dir %}
+    package_dir={"": "src"},{% endif %}
+    include_package_data=True,
+{% if build_entry_points %}
+    entry_points={ {%- for name, items in build_entry_points.items() %}
+        "{{ name }}": [{% for item in items %}
+            "{{ item }}",{% endfor %}
+        ],{% endfor %}
+    },
+{% endif %}
+    python_requires=">=3.6",
+    install_requires=[],
+    extras_require=extras_require,
+
+    classifiers=[],
+)

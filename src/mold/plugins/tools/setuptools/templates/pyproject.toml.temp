@@ -1,0 +1,7 @@
+[build-system]
+requires = ["setuptools>=41.0", "wheel"]
+build-backend = "setuptools.build_meta"
+{% for name, lines in build_pyproject_sections.items() %}
+[{{ name }}]
+{% for line in lines %}{{ line }}
+{% endfor %}{% endfor %}

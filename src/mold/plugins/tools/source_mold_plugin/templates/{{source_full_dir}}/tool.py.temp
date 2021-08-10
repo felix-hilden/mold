@@ -1,0 +1,11 @@
+from mold import Tool, templates_from_directory
+from .domain import module, domain
+
+tool = Tool(
+    module,
+    "custom tool",
+    "a new Mold tool",
+    depends=[],
+    templates=templates_from_directory(__file__),
+)
+domain.add_tool(tool)

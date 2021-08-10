@@ -1,0 +1,6 @@
+import {{ source_package_name }}
+
+
+class TestPackage:
+    def test_version(self):
+        assert {{ source_package_name }}.__version__

@@ -1,0 +1,8 @@
+.. _api:
+
+API
+===
+
+The public API of {{ project_name }} is documented here.
+
+.. automodule:: {{ project_slug }}

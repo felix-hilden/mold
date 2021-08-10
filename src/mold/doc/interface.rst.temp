@@ -1,0 +1,33 @@
+{{ s.name }}
+{{ '*' * (s.name | length) }}
+Location: ``{{ import_location }}``
+
+{{ s.description.capitalize() }}.
+
+{%- if s.get_namespace_dict(s.provides) %}
+
+Provides variables:
+{% for name in s.get_namespace_dict(s.provides) %}
+- ``{{ name }}`` (``{{ s.provides.__annotations__[name] }}``){% endfor %}
+{%- endif %}
+
+{%- if s.get_namespace_dict(s.accepts) %}
+
+Accepts variables:
+{% for name in s.get_namespace_dict(s.accepts) %}
+- ``{{ name }}`` (``{{ s.accepts.__annotations__[name] }}``){% endfor %}
+{%- endif %}
+
+{%- if s.parents %}
+
+Parent interfaces:
+{% for parent in s.parents %}
+- {{ parent }}{% endfor %}
+{%- endif %}
+
+{%- if s.questions %}
+
+Associated questions:
+{% for question in s.questions %}
+- ``{{ question.id }}``, prompt: {{ question.prompt.replace('\n', ' ') }}{% endfor %}
+{%- endif %}

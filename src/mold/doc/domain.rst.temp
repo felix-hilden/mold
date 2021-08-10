@@ -1,0 +1,12 @@
+{{ s.name }}
+{{ '*' * (s.name | length) }}
+Location: ``{{ import_location }}``
+
+{{ s.description.capitalize() }}.
+
+{%- if s.tools %}
+
+Registered tools:
+{% for tool in s.tools %}
+- {{ tool }}{% endfor %}
+{%- endif %}

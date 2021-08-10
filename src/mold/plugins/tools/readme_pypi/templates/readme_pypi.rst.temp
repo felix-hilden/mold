@@ -1,0 +1,33 @@
+{{ project_name }}
+{{ '=' * (project_name|length()) }}
+{%- if package_readme_header_lines %}
+{%- for item in package_readme_header_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+{{ readme_description }}
+
+{%- if readme_example_lines %}
+{% for item in readme_example_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+{%- if package_readme_links %}
+
+{{ project_name }} elsewhere:
+{% for link in package_readme_links %}
+- {{ link.pre_text }} `{{ link.text }} <{{ link.target }}>`_{% endfor %}
+{%- endif %}
+
+Installation
+------------
+{{ project_name }} can be installed from the Package Index via ``pip`.
+
+.. code:: sh
+
+   $ pip install {{ project_slug }}
+
+{%- if package_readme_footer_lines %}
+{% for item in package_readme_footer_lines %}
+{{ item }}{% endfor %}
+{%- endif %}

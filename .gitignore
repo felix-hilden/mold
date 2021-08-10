@@ -4,8 +4,8 @@
 # Python
 *.py[cod]
 **__pycache__/
-build/
-dist/
+/build/
+/dist/
 *.egg-info/
 
 # Editors
@@ -15,13 +15,17 @@ dist/
 # Tools
 .coverage
 coverage.xml
-docs/build
+/docs/build/
 .tox/
 
 # Environments
-.env
-.venv
+.env/
+.venv/
 env/
 venv/
 env.bak/
 venv.bak/
+
+# Misc
+/docs/src/command_line_reference.rst
+/docs/src/plugins.rst

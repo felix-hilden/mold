@@ -1,0 +1,8 @@
+from mold import Category
+from .domain import module
+
+category = Category(
+    module,
+    "custom category",
+    "a new Mold category",
+)

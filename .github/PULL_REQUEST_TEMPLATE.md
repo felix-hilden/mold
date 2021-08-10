@@ -7,5 +7,5 @@ If some checks don't apply, please check them regardless.
 Related issue: #XXX
 
 - [ ] Tests written
-- [ ] Documentation and changelog entry written
-- [ ] All `tox` checks passed with an appropriately configured environment
+- [ ] Documentation and changelog entry written, docs build passes
+- [ ] All `tox` checks passed

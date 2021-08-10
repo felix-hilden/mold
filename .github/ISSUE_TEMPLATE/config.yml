@@ -1,8 +1,8 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: r/leanpython
-    url: https://www.reddit.com/r/learnpython/
-    about: Forum for asking and answering questions about Python
+  - name: GitHub discussions
+    url: https://github.com/felix-hilden/mold/discussions
+    about: Mold Q&A and general discussions
   - name: Stack Overflow
     url: https://stackoverflow.com/questions/tagged/pyinit
-    about: Forum for asking and answering programming questions
+    about: Forum for programming questions in general

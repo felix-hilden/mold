@@ -1,0 +1,54 @@
+{{ project_name }}
+{{ '=' * (project_name|length()) }}
+{%- if doc_header_lines %}
+{%- for item in doc_header_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+{{ readme_description }}
+
+{%- if readme_example_lines %}
+{% for item in readme_example_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+If you're new here, have a look at :ref:`getting-started`.
+Detailed information is available in the :ref:`reference`.
+
+{%- if doc_links %}
+
+{{ project_name }} elsewhere:
+{% for link in doc_links %}
+- {{ link.pre_text }} `{{ link.text }} <{{ link.target }}>`_{% endfor %}
+{%- endif %}
+
+.. toctree::
+   :hidden:
+   :caption: Package
+
+   release_notes
+   reference
+   api
+   about
+
+.. toctree::
+   :hidden:
+   :caption: Guide
+
+   getting_started
+   tutorials
+   examples
+
+{%- if doc_links %}
+
+.. toctree::
+   :hidden:
+   :caption: Links
+{% for link in doc_links %}
+   {{ link.text }} ↪ <{{ link.target }}>{% endfor %}
+{%- endif %}
+
+{%- if doc_footer_lines %}
+{% for item in doc_footer_lines %}
+{{ item }}{% endfor %}
+{%- endif %}

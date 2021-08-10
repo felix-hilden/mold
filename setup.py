@@ -3,34 +3,36 @@ import os
 from pathlib import Path
 
 root = Path(os.path.realpath(__file__)).parent
-version_file = root / 'mold' / 'VERSION'
-readme_file = root / 'readme.rst'
+version_file = root / 'src' / 'mold' / 'VERSION'
+readme_file = root / 'readme_pypi.rst'
 
 pypi_url = 'https://pypi.org/project/mold'
 github_url = 'https://github.com/felix-hilden/mold'
 documentation_url = 'https://pymold.rtfd.org'
 
 extras_require = {
+    'build': [
+        'build',
+        'twine',
+    ],
     'docs': [
-        'sphinx',
+        'sphinx>=4',
         'sphinx-rtd-theme',
     ],
     'tests': [
-        'coverage',
-        'pytest',
+        'coverage[toml]>=5',
+        'pytest>=6',
     ],
     'checks': [
         'tox',
-        'doc8',
+        'doc8>=0.9',
         'flake8',
         'flake8-bugbear',
-        'pydocstyle',
+        'pydocstyle[toml]>=6.1',
         'pygments',
     ]
 }
-extras_require['dev'] = (
-    extras_require['docs'] + extras_require['tests'] + extras_require['checks']
-)
+extras_require['dev'] = sum(extras_require.values(), [])
 
 setuptools.setup(
     name='mold',
@@ -54,14 +56,20 @@ setuptools.setup(
 
     license='MIT',
     keywords='package repository template initialisation',
-    packages=setuptools.find_packages(exclude=('tests', 'tests.*',)),
+    packages=setuptools.find_packages(where='src'),
+    package_dir={'': 'src'},
     include_package_data=True,
-    package_data={
-        'mold': ['VERSION']
+    entry_points={
+        'console_scripts': ['mold = mold.cli:main'],
+        'mold.plugins': [
+            'mold_builtin_plugins = mold.plugins',
+        ],
     },
 
-    python_requires='>=3.6',
-    install_requires=[],
+    python_requires='>=3.7',
+    install_requires=[
+        'Jinja2',
+    ],
     extras_require=extras_require,
 
     classifiers=[],

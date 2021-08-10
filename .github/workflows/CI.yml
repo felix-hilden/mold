@@ -15,7 +15,7 @@ jobs:
   matrix:
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.9]
+        python-version: [3.7, 3.9]
     name: Pytest on ${{matrix.python-version}}
     runs-on: ubuntu-latest
 
@@ -47,3 +47,5 @@ jobs:
           pip install .[dev]
       - name: Run tox environments
         run: tox
+      - name: Build documentation
+        run: cd docs && make html

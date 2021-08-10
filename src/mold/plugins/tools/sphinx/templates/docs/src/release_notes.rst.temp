@@ -1,0 +1,14 @@
+.. _release-notes:
+
+Release notes
+=============
+
+These release notes are based on
+`Keep a Changelog <https://keepachangelog.com>`_.
+{{ project_name }} adheres to
+{% if docs_semver_over_calver %}`Semantic Versioning <https://semver.org>`_
+{%- else %}`Calendar Versioning <https://calver.org>`_{% endif%}.
+
+Unreleased
+----------
+- Changes here

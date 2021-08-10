@@ -1,0 +1,4 @@
+graft {{ source_full_dir }}
+{% for item in build_manifest_in_items %}{{ item }}
+{% endfor -%}
+global-exclude *.py[cod] __pycache__ *.so

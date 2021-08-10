@@ -1,0 +1,13 @@
+"""
+{{ readme_description }}
+
+{% for item in source_doc_lines -%}
+{{ item }}
+{% endfor -%}
+"""
+{% for item in source_import_lines -%}
+{{ item }}
+{% endfor %}
+{% for item in source_code_lines -%}
+{{ item }}
+{% endfor %}

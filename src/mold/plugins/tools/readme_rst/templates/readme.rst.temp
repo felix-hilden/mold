@@ -1,0 +1,25 @@
+{{ project_name }}
+{{ '=' * (project_name|length()) }}
+{%- if readme_header_lines %}
+{%- for item in readme_header_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+{{ readme_description }}
+
+{%- if readme_example_lines %}
+{% for item in readme_example_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
+
+{%- if readme_links %}
+
+{{ project_name }} elsewhere:
+{% for link in readme_links %}
+- {{ link.pre_text }} `{{ link.text }} <{{ link.target }}>`_{% endfor %}
+{%- endif %}
+
+{%- if readme_footer_lines %}
+{% for item in readme_footer_lines %}
+{{ item }}{% endfor %}
+{%- endif %}
