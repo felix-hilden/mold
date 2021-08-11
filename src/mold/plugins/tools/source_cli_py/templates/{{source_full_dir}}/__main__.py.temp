@@ -1,3 +1,4 @@
+"""CLI enpoint for module invocation (python -m {{ project_slug }})."""
 from .cli import main
 
 if __name__ == "__main__":

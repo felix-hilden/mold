@@ -9,10 +9,9 @@ from .configure import configure_new, configure_show, configure_del, print_confi
 
 mold_help = """Extensible and configurable project initialisation.
 
-usage: mold [configuration]
+usage: mold [configuration] [--help] [--version]
        mold add [configuration]
        mold config <command> [arg]
-       mold [--help] [--version]
 
 COMMANDS:
 [configuration]     Initialise a new project.
@@ -42,7 +41,7 @@ def main():
         print(f'mold v{__version__}')
         return
 
-    _load_entry_points()
+    load_entry_points()
     if mode == 'config':
         configure(_maybe_argument(2), _maybe_argument(3))
     elif mode == 'add':
@@ -67,7 +66,8 @@ def configure(command: str = None, name: str = None):
         exit(1)
 
 
-def _load_entry_points():
+def load_entry_points():
+    """Load available plugins from entry points."""
     for entry_point in pkg_resources.iter_entry_points('mold.plugins'):
         entry_point.load()
 

@@ -32,7 +32,11 @@ def render_doc(import_location: str) -> str:
     """
     *from_parts, name = import_location.split('.')
     from_ = '.'.join(from_parts)
-    thing = getattr(import_module(from_), name)
+
+    try:
+        thing = getattr(import_module(from_), name, None)
+    except ModuleNotFoundError:
+        thing = None
 
     if isinstance(thing, Category):
         type_ = 'category'
