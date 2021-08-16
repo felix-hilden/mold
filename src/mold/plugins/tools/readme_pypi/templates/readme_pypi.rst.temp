@@ -21,7 +21,7 @@
 
 Installation
 ------------
-{{ project_name }} can be installed from the Package Index via ``pip`.
+{{ project_name }} can be installed from the Package Index via ``pip``.
 
 .. code:: sh
 

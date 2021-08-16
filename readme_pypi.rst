@@ -23,7 +23,7 @@ Mold elsewhere:
 
 Installation
 ------------
-Mold can be installed from the Package Index via ``pip`.
+Mold can be installed from the Package Index via ``pip``.
 
 .. code:: sh
 
