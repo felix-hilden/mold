@@ -93,7 +93,16 @@ according to the project name specified in the project metadata.
 
     $ rm -r dist
     $ python -m build
+    $ twine check --strict dist/*
     $ twine upload dist/*
+
+If you'd like to test the upload and the resulting package,
+use `TestPyPI <https://test.pypi.org>`_ instead.
+
+.. code:: sh
+
+    $ twine upload --repository testpypi dist/*
+    $ pip install --index-url https://test.pypi.org/simple/ mold
 
 .. |issue_resolution| image:: http://isitmaintained.com/badge/resolution/felix-hilden/mold.svg
    :target: https://isitmaintained.com/project/felix-hilden/mold
