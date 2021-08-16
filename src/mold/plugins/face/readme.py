@@ -1,3 +1,5 @@
+import string
+
 from typing import List
 from mold import Interface, Question, Link
 from ..domains import module
@@ -18,7 +20,10 @@ questions = [Question('readme_description', 'project description')]
 
 
 def post_dialog():
-    Provides.readme_description = questions[0].response
+    description = questions[0].response.strip().capitalize()
+    if description[-1] not in string.punctuation:
+        description += '.'
+    Provides.readme_description = description
 
 
 interface = Interface(
