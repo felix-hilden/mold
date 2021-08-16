@@ -37,7 +37,7 @@ The install can be verified, and any changes tested by running tox.
 
     $ tox
 
-Now tests and static checks have been run, and documentation has been built.
+Now tests and static checks have been run.
 A list of all individual tasks can be viewed with their descriptions.
 
 .. code:: sh
