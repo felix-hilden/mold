@@ -35,6 +35,17 @@ def configure_show(name: str = None):
             msg += f' (providing {t.category.name}: {t.category.description})'
         print(msg)
 
+    files = {temp.target_path for tool in config.tools for temp in tool.templates()}
+    parts = {}
+    for file in files:
+        top = parts
+        for part in file.parts:
+            top[part] = top.get(part, {})
+            top = top[part]
+
+    print('\nFiles written by the configuration:')
+    print_dir_recur(parts)
+
 
 def configure_del(name: str = None):
     """Delete a configuration."""
@@ -43,6 +54,17 @@ def configure_del(name: str = None):
         print_configs(configs)
         name = select_one(configs).name
     delete_config(name)
+
+
+def print_dir_recur(parts: dict, in_level: int = 1):
+    """Print directory structure."""
+    for part in sorted(parts, key=lambda k: k.lower()):
+        print('    ' * in_level + part, end='')
+        if parts[part]:
+            print('/')
+            print_dir_recur(parts[part], in_level + 1)
+        else:
+            print()
 
 
 def domain_repr(domain):
