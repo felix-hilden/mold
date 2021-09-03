@@ -5,8 +5,14 @@ Contributing
 Thank you for considering contributing to {{ project_name }}!
 If you've found a bug or would like to propose a feature,
 please submit an `issue <{{ vcs_host_url }}/issues>`_.
-If you'd like to get
-`more involved <https://opensource.guide/how-to-contribute/>`_, here's how:
+
+If you'd like to get more involved,
+`here's how <https://opensource.guide/how-to-contribute/>`_.
+There are many valuable contributions in addition to contributing code!
+If you're so inclined, triaging issues, improving documentation,
+helping other users and reviewing existing code and PRs is equally appreciated!
+
+The rest of this guide focuses on development and code contributions.
 
 Installation
 ------------
