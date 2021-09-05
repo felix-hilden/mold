@@ -5,22 +5,13 @@ from collections import defaultdict
 from jinja2 import TemplateSyntaxError
 
 from .. import Tool, Interface, hook
-from ..config import read_config, read_all_configs
 from ..template import write, render, undeclared_vars
-from .configure import (
-    check_dependencies, print_configs, select_one, concretise_config
-)
+from .configure import check_dependencies, concretise_config, select_config
 
 
 def generate(name: str = None, add: bool = False):
     """Generate project files."""
-    if name:
-        config = read_config(name)
-    else:
-        configs = read_all_configs()
-        print_configs(configs)
-        config = select_one(configs)
-
+    config = select_config(name)
     config = concretise_config(config, hook._domains)
 
     tools_set = set(config.tools)

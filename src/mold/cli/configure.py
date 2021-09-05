@@ -18,13 +18,7 @@ from ..things import Tool, Category
 
 def configure_show(name: str = None):
     """Show information about a config."""
-    if name is None:
-        configs = read_all_configs()
-        print_configs(configs)
-        config = select_one(configs)
-    else:
-        config = read_config(name)
-
+    config = select_config(name)
     config = concretise_config(config, hook._domains)
     print(f'\nCONFIGURATION "{config.name}":')
     print(f'Domain: {config.domain.name} ({config.domain.description})')
@@ -49,11 +43,18 @@ def configure_show(name: str = None):
 
 def configure_del(name: str = None):
     """Delete a configuration."""
+    config = select_config(name)
+    delete_config(config.name)
+
+
+def select_config(name: str = None):
+    """Select configuration."""
     if name is None:
         configs = read_all_configs()
         print_configs(configs)
-        name = select_one(configs).name
-    delete_config(name)
+        return select_one(configs)
+    else:
+        return read_config(name)
 
 
 def print_dir_recur(parts: dict, in_level: int = 1):
