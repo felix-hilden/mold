@@ -11,6 +11,7 @@ class Question:
 
     id: str
     prompt: str
+    prefill: bool = False
     response: str = field(init=False, default_factory=str)
 
 

@@ -13,7 +13,7 @@ class Accepts:
 
 
 questions = [
-    Question('github_user', 'GitHub user name'),
+    Question('github_user', 'GitHub user name', prefill=True),
     Question('github_repo', 'GitHub repository (leave empty for project slug)'),
 ]
 

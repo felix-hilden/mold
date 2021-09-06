@@ -16,7 +16,7 @@ class Accepts:
 
 
 questions = [
-    Question('license_author', 'package author'),
+    Question('license_author', 'package author', prefill=True),
     Question('license_first_year', 'first year of license (leave blank for current)'),
 ]
 

@@ -22,7 +22,7 @@ class Accepts:
 
 
 questions = [
-    Question('build_email', 'package author email'),
+    Question('build_email', 'package author email', prefill=True),
     Question('build_keywords', 'package keywords (space separated)')
 ]
 

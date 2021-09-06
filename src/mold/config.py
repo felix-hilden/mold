@@ -7,6 +7,7 @@ from .things import Domain, Tool
 
 user_configs = Path().home() / '.mold'
 builtin_configs = Path(__file__).parent / 'configs'
+config_suffix = '.config.json'
 
 
 @dataclass
@@ -29,7 +30,7 @@ class ObjConfig:
 
 def read_config(name: str) -> StrConfig:
     """Read configuration from a file."""
-    filename = name + '.json'
+    filename = name + config_suffix
     file = user_configs / filename
     if not file.exists():
         file = builtin_configs / filename
@@ -42,7 +43,7 @@ def write_config(config: StrConfig) -> None:
     conf_dict = asdict(config)
     name = conf_dict.pop('name')
 
-    name = name + '.json'
+    name = name + config_suffix
     if (builtin_configs / name).exists():
         raise FileExistsError('Cannot overwrite builtin configuration!')
 
@@ -53,14 +54,15 @@ def write_config(config: StrConfig) -> None:
 
 def delete_config(name: str) -> None:
     """Delete configuration file."""
-    file = user_configs / (name + '.json')
+    file = user_configs / (name + config_suffix)
     file.unlink()
 
 
 def read_all_configs() -> List[StrConfig]:
     """Read all configurations."""
-    configs = list(user_configs.glob('*.json')) + list(builtin_configs.glob('*.json'))
-    return [read_config(path.stem) for path in configs]
+    pattern = '*' + config_suffix
+    configs = list(user_configs.glob(pattern)) + list(builtin_configs.glob(pattern))
+    return [read_config(path.name.replace(config_suffix, '')) for path in configs]
 
 
 def concretise_config(

@@ -26,27 +26,12 @@ def generate(name: str = None, add: bool = False):
             break
 
     check_dependencies(tools)
-
-    faces_set = set()
-    for tool in tools:
-        face_deps = [d for d in tool.depends if isinstance(d, Interface)]
-        faces_set.update(gather_interfaces(face_deps))
-
-    faces = []
-    while True:
-        for face in list(faces_set):
-            if all(p in faces for p in face.parents):
-                faces.append(face)
-                faces_set.discard(face)
-        if not faces_set:
-            break
-
-    faces.insert(0, hook._project_interface)
+    faces = gather_interfaces(tools)
 
     print('\nConfigure project:')
     for face in faces:
         for question in face.questions:
-            question.response = input(question.prompt.capitalize() + ': ')
+            question.response = dialog(question.prompt)
 
     for face in faces:
         face.post_dialog()
@@ -125,9 +110,34 @@ def generate(name: str = None, add: bool = False):
             write(file, text)
 
 
-def gather_interfaces(interfaces) -> set:
+def gather_interfaces(tools: list) -> list:
+    """Gather all interfaces of tools."""
+    faces_set = set()
+    for tool in tools:
+        face_deps = [d for d in tool.depends if isinstance(d, Interface)]
+        faces_set.update(tool_interfaces(face_deps))
+
+    faces = []
+    while True:
+        for face in list(faces_set):
+            if all(p in faces for p in face.parents):
+                faces.append(face)
+                faces_set.discard(face)
+        if not faces_set:
+            break
+
+    faces.insert(0, hook._project_interface)
+    return faces
+
+
+def tool_interfaces(interfaces) -> set:
     """Recursively determine all connected interfaces."""
     faces = set(interfaces)
     for face in interfaces:
-        faces.update(gather_interfaces(face.parents))
+        faces.update(tool_interfaces(face.parents))
     return faces
+
+
+def dialog(prompt) -> str:
+    """Format prompt and perform dialog."""
+    return input(prompt.capitalize() + ': ')

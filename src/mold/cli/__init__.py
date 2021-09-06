@@ -5,13 +5,12 @@ import sys
 from ..config import read_all_configs
 from .generate import generate
 from .configure import configure_new, configure_show, configure_del, print_configs
-
+from .prefill import prefill_fill, prefill_clear, prefill_show
 
 mold_help = """Extensible and configurable project initialisation.
 
 usage: mold [configuration] [--help] [--version]
-       mold add [configuration]
-       mold config <command> [arg]
+       mold <command> [arg]
 
 COMMANDS:
 [configuration]     Initialise a new project.
@@ -23,6 +22,10 @@ config list         List all saved configurations.
 config new [name]   Create a new configuration.
 config show [name]  Show a configuration.
 config del [name]   Delete a configuration.
+
+prefill             Prefill dialog based on a configuration.
+prefill show        Show prefilled dialog values.
+prefill clear       Clear prefilled dialog values.
 
 --help, -h          Display this help message and quit.
 --version, -v       Display Mold version and quit.
@@ -44,6 +47,8 @@ def main():
     load_entry_points()
     if mode == 'config':
         configure(_maybe_argument(2), _maybe_argument(3))
+    elif mode == 'prefill':
+        prefill(_maybe_argument(2))
     elif mode == 'add':
         generate(_maybe_argument(2), add=True)
     else:
@@ -62,6 +67,20 @@ def configure(command: str = None, name: str = None):
         print_configs(read_all_configs())
     else:
         print('Missing sub command! See help below.\n')
+        print(mold_help)
+        exit(1)
+
+
+def prefill(command: str = None):
+    """Manage prefilled values."""
+    if command == 'show':
+        prefill_show()
+    elif command == 'clear':
+        prefill_clear()
+    elif command is None:
+        prefill_fill()
+    else:
+        print('Invalid sub command! See help below.\n')
         print(mold_help)
         exit(1)
 
