@@ -10,6 +10,7 @@ Mold adheres to `Semantic Versioning <https://semver.org>`_.
 Unreleased
 ----------
 - Prefill configuration values
+- Add more licenses
 
 0.1.0 (2021-08-16)
 ------------------

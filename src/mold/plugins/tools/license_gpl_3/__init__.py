@@ -7,14 +7,14 @@ from ...face.readme import Accepts as ReadmeVars
 from ...face.package_readme import Accepts as PackageReadmeVars
 
 badge_lines = """
-.. |license| image:: https://img.shields.io/badge/License-MIT-blue.svg
-   :target: https://choosealicense.com/licenses/mit
-   :alt: License: MIT\
+.. |license| image:: https://img.shields.io/badge/License-GPLv3.0-blue.svg
+   :target: https://choosealicense.com/licenses/gpl-3.0/
+   :alt: License: GPLv3.0\
 """
 
 
 def provide_vars():
-    Provides.license_shorthand = 'MIT'
+    Provides.license_shorthand = 'GPLv3.0'
 
 
 def accept_vars():
@@ -30,8 +30,8 @@ def accept_vars():
 
 tool = Tool(
     module,
-    'MIT',
-    'permissive license only preserving copyright and license notice',
+    'GPLv3.0',
+    'strong copyleft license disclosing source and granting patent rights',
     depends=[license_],
     category=license_category,
     templates=templates_from_directory(__file__),
