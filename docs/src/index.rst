@@ -45,6 +45,9 @@ or a specific configuration in more detail.
     $ mold config list
     $ mold config show python-library
 
+For more details see :ref:`cli` and the list of :ref:`plugins`.
+If you're new here, have a look at the :ref:`tutorial`.
+
 Mission
 -------
 We aim to be the fastest and simplest way of creating
@@ -72,6 +75,7 @@ Seeing new tools might even spark inspiration to learn more.
 
    release_notes
    command_line_reference
+   tutorial
    plugins
 
 .. toctree::
