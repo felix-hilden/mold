@@ -1,20 +1,18 @@
 """Mold prefill values."""
 import json
 
-from ..config import user_configs
+from ..config import load_prefilled, prefill_file
 from ..hook import _domains
 from .generate import gather_interfaces, dialog
-
-prefill_file = user_configs / 'prefill.json'
 
 
 def prefill_show():
     """Show prefilled values."""
-    if not prefill_file.exists():
+    values = load_prefilled()
+    if not values:
         print('No prefilled values!')
         return
 
-    values = json.loads(prefill_file.read_text())
     for k, v in values.items():
         print(f'{k}: {v}')
 

@@ -6,7 +6,7 @@ from jinja2 import TemplateSyntaxError
 
 from .. import Tool, Interface, hook
 from ..template import write, render, undeclared_vars
-from ..config import gather_categories
+from ..config import gather_categories, load_prefilled
 from .configure import (
     concretise_config, select_config, select_one, print_choices, tool_or_category_repr
 )
@@ -61,11 +61,12 @@ def generate(name: str = None, add: bool = False):
 
     check_dependencies(tools)
     faces = gather_interfaces(tools)
+    prefilled = load_prefilled()
 
     print('\nConfigure project:')
     for face in faces:
         for question in face.questions:
-            question.response = dialog(question.prompt)
+            question.response = prefilled.get(question.id) or dialog(question.prompt)
 
     for face in faces:
         face.post_dialog()

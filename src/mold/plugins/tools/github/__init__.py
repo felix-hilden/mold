@@ -9,8 +9,7 @@ from ...face.build import Accepts as BuildVars
 from ...face.todo import Accepts as TodoVars
 from ...face.doc import Accepts as DocVars
 
-_clone_msg = """Clone GitHub repository now?
-(Make the repository if you haven't already) Y/[N]: """
+_clone_msg = """Clone GitHub repository now (Y/[N]): """
 
 
 def accept_vars():

@@ -1,4 +1,4 @@
-"""Mold configuration files."""
+"""Mold configuration and prefill files."""
 import json
 
 from collections import defaultdict
@@ -10,6 +10,7 @@ from .things import Domain, Tool, Category
 user_configs = Path().home() / '.mold'
 builtin_configs = Path(__file__).parent / 'configs'
 config_suffix = '.config.json'
+prefill_file = user_configs / 'prefill.json'
 
 
 @dataclass
@@ -100,3 +101,11 @@ def gather_categories(tools: List[Tool]) -> Dict[Optional[Category], List[Tool]]
     for tool in tools:
         category_tools[tool.category].append(tool)
     return category_tools
+
+
+def load_prefilled():
+    """Load prefilled values."""
+    if not prefill_file.exists():
+        return {}
+
+    return json.loads(prefill_file.read_text())
