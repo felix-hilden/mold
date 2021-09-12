@@ -14,7 +14,7 @@ Create initialisation configurations to fit your own needs.
 .. code:: sh
 
     $ mold --help
-    $ mold python-package
+    $ mold python-library
 
 Mold elsewhere:
 
@@ -33,7 +33,7 @@ Then initialise a Python package with the builtin configuration.
 
 .. code:: sh
 
-    $ mold python-package
+    $ mold python-library
 
 A series of dialogs will determine the most important information required to
 initialise a working library with all the necessary development tools.
@@ -43,7 +43,7 @@ or a specific configuration in more detail.
 .. code:: sh
 
     $ mold config list
-    $ mold config show python-package
+    $ mold config show python-library
 
 Mission
 -------

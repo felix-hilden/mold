@@ -93,7 +93,7 @@ def templates_from_directory(init_file: str) -> Callable[[], List[Template]]:
 
 @dataclass(repr=False, eq=False)
 class Category(Component):
-    """Collection of tools that should be mutually exclusive."""
+    """Collection of tools to pick one out of during initialisation."""
 
 
 @dataclass(repr=False, eq=False)

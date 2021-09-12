@@ -1,8 +1,6 @@
 {
-    "domain": "mold_builtin-Python",
-    "tools": [
+    "components": [
         "mold_builtin-gitignore for Python",
-        "mold_builtin-MIT",
         "mold_builtin-python module",
         "mold_builtin-setuptools",
         "mold_builtin-pytest+tox",
@@ -13,6 +11,9 @@
         "mold_builtin-rst readme",
         "mold_builtin-sphinx",
         "mold_builtin-rtd",
-        "mold_builtin-rst todo"
-    ]
+        "mold_builtin-rst todo",
+        "mold_builtin-license",
+        "mold_builtin-source"
+    ],
+    "domain": "mold_builtin-Python"
 }

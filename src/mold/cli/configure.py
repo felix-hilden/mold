@@ -1,7 +1,5 @@
 """Mold configuration management."""
-from collections import defaultdict
 from textwrap import indent
-from typing import List, Dict, Optional
 from .. import hook
 from ..config import (
     write_config,
@@ -12,8 +10,9 @@ from ..config import (
     abstract_config,
     find_by_repr,
     ObjConfig,
+    gather_categories,
 )
-from ..things import Tool, Category
+from ..things import Tool
 
 
 def configure_show(name: str = None):
@@ -22,14 +21,14 @@ def configure_show(name: str = None):
     config = concretise_config(config, hook._domains)
     print(f'\nCONFIGURATION "{config.name}":')
     print(f'Domain: {config.domain.name} ({config.domain.description})')
-    print('Tools:')
-    for t in config.tools:
-        msg = f' - {t.name}: {t.description}'
-        if t.category:
-            msg += f' (providing {t.category.name}: {t.category.description})'
-        print(msg)
+    print('Components:')
+    for c in config.components:
+        t = 'Tool' if isinstance(c, Tool) else 'Category'
+        print(f' - {c.name}: {c.description} ({t})')
 
-    files = {temp.target_path for tool in config.tools for temp in tool.templates()}
+    files = {
+        temp.target_path for tool in config.components for temp in tool.templates()
+    }
     parts = {}
     for file in files:
         top = parts
@@ -114,39 +113,35 @@ def configure_new(name: str = None):
     available_categories = [k for k in category_tools.keys() if k is not None]
     top_choices = available_categories + category_tools[None]
 
-    while True:
-        print(f'\nTools and categories for {domain.name}:')
-        print_choices([tool_or_category_repr(c, category_tools) for c in top_choices])
-        choices = select_many(top_choices)
+    print(f'\nTools and categories for {domain.name}:')
+    print_choices([tool_or_category_repr(c, category_tools) for c in top_choices])
+    choices = select_many(top_choices)
 
-        tools = []
-        for choice in choices:
-            if isinstance(choice, Tool):
-                tools.append(choice)
-                continue
+    print(
+        '\nChoose tools from categories, '
+        'or leave empty to be selected when initialising.'
+    )
 
-            print(f'\nTools providing {choice.name}:')
-            print_choices([
-                tool_or_category_repr(c, category_tools) for c in category_tools[choice]
-            ])
-            tools.append(select_one(category_tools[choice]))
+    tools = []
+    categories = []
+    for choice in choices:
+        if isinstance(choice, Tool):
+            tools.append(choice)
+            continue
 
-        try:
-            check_dependencies(tools)
-            break
-        except AssertionError:
-            print('Invalid configuration, dependencies not satisfied!')
+        print(f'\nTools providing {choice.name}:')
+        print_choices([
+            tool_or_category_repr(c, category_tools) for c in category_tools[choice]
+        ])
+        selection = select_one(category_tools[choice], optional=True)
+        if selection:
+            tools.append(selection)
+        else:
+            print('  Tool will be chosen on initialisation.')
+            categories.append(choice)
 
-    config = ObjConfig(name, domain, tools)
+    config = ObjConfig(name, domain, tools + categories)
     write_config(abstract_config(config))
-
-
-def gather_categories(tools: List[Tool]) -> Dict[Optional[Category], List[Tool]]:
-    """Transpose a list of tools to be indexed with their associated categories."""
-    category_tools = defaultdict(list)
-    for tool in tools:
-        category_tools[tool.category].append(tool)
-    return category_tools
 
 
 def print_configs(configs) -> None:
@@ -173,31 +168,23 @@ def select_many(choices: list) -> list:
     return [choices[i] for i in indices]
 
 
-def select_one(choices: list):
+def select_one(choices: list, optional: bool = False):
     """Choose one from a list."""
     if len(choices) == 1:
         print('Choosing (0) automatically as the only option...')
         return choices[0]
 
     while True:
-        in_ = input('Choose one: ')
+        in_ = input(f'Choose one{" (optional)" * optional}: ')
+
+        if optional and not in_:
+            print('  Selected none.')
+            return
+
         try:
             return choices[int(in_)]
         except (ValueError, IndexError):
             print('INVALID INPUT! ', end='')
-
-
-def check_dependencies(tools):
-    """Check that a set of tools fulfills its dependencies."""
-    for tool in tools:
-        deps = [d for d in tool.depends if isinstance(d, Tool)]
-        assert all([t in tools for t in deps])
-
-    category_tools = gather_categories(tools)
-    categories = [c for c in category_tools.keys() if c is not None]
-    for c in categories:
-        if len(category_tools[c]) > 1:
-            raise ValueError('More than one tool for a category!')
 
 
 def parse_indices(in_: str) -> list:

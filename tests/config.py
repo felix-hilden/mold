@@ -6,7 +6,7 @@ from mold import config, hook, cli
 
 class TestConfig:
     def test_read_config(self):
-        config.read_config('mold-plugin')
+        config.read_config('python-library')
 
     def test_write_user_config(self, tmpdir):
         conf = config.StrConfig('name', 'domain', list('str'))
@@ -14,7 +14,7 @@ class TestConfig:
             config.write_config(conf)
 
     def test_overwrite_builtin_config_raises(self, tmpdir):
-        conf = config.StrConfig('mold-plugin', 'domain', list('str'))
+        conf = config.StrConfig('python-library', 'domain', list('str'))
         with patch('mold.config.user_configs', Path(tmpdir)):
             with pytest.raises(FileExistsError):
                 config.write_config(conf)

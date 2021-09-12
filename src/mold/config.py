@@ -1,9 +1,11 @@
 """Mold configuration files."""
 import json
+
+from collections import defaultdict
 from dataclasses import dataclass, asdict
-from typing import List
+from typing import List, Union, Dict, Optional
 from pathlib import Path
-from .things import Domain, Tool
+from .things import Domain, Tool, Category
 
 user_configs = Path().home() / '.mold'
 builtin_configs = Path(__file__).parent / 'configs'
@@ -16,7 +18,7 @@ class StrConfig:
 
     name: str
     domain: str
-    tools: List[str]
+    components: List[str]
 
 
 @dataclass
@@ -25,7 +27,7 @@ class ObjConfig:
 
     name: str
     domain: Domain
-    tools: List[Tool]
+    components: List[Union[Tool, Category]]
 
 
 def read_config(name: str) -> StrConfig:
@@ -70,7 +72,8 @@ def concretise_config(
 ) -> ObjConfig:
     """Dereference configuration."""
     domain = find_by_repr(available_domains, config.domain)
-    loaders = [find_by_repr(domain.tools, c) for c in config.tools]
+    categories = list(gather_categories(domain.tools).keys())
+    loaders = [find_by_repr(domain.tools + categories, c) for c in config.components]
     return ObjConfig(config.name, domain, loaders)
 
 
@@ -79,7 +82,7 @@ def abstract_config(config: ObjConfig) -> StrConfig:
     return StrConfig(
         config.name,
         repr(config.domain),
-        [repr(d) for d in config.tools],
+        [repr(d) for d in config.components],
     )
 
 
@@ -89,3 +92,11 @@ def find_by_repr(haystack: list, needle: str):
         if repr(thing) == needle:
             return thing
     raise IndexError(f'Not found: {needle}!')
+
+
+def gather_categories(tools: List[Tool]) -> Dict[Optional[Category], List[Tool]]:
+    """Transpose a list of tools to be indexed with their associated categories."""
+    category_tools = defaultdict(list)
+    for tool in tools:
+        category_tools[tool.category].append(tool)
+    return category_tools

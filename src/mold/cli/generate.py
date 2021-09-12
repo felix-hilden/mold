@@ -6,7 +6,10 @@ from jinja2 import TemplateSyntaxError
 
 from .. import Tool, Interface, hook
 from ..template import write, render, undeclared_vars
-from .configure import check_dependencies, concretise_config, select_config
+from ..config import gather_categories
+from .configure import (
+    concretise_config, select_config, select_one, print_choices, tool_or_category_repr
+)
 
 
 def generate(name: str = None, add: bool = False):
@@ -14,7 +17,38 @@ def generate(name: str = None, add: bool = False):
     config = select_config(name)
     config = concretise_config(config, hook._domains)
 
-    tools_set = set(config.tools)
+    categories = []
+    single_tools = []
+    for comp in config.components:
+        if isinstance(comp, Tool):
+            single_tools.append(comp)
+        else:
+            categories.append(comp)
+
+    tool_deps = {
+        dep for tool in single_tools for dep in tool.depends if isinstance(dep, Tool)
+    }
+    category_tools = gather_categories(config.domain.tools)
+    select_tools = []
+    print('\nChoose tools from categories:')
+    for category in categories:
+        cat_tools = category_tools[category]
+        common = set(cat_tools).intersection(tool_deps)
+        if len(common) > 1:
+            print(f'Cannot fulfill dependencies with category {category}')
+            exit(1)
+        if len(common) == 1:
+            tool = list(common)[0]
+            print(f'Selecting {tool} as the only valid option in {category}')
+            select_tools.append(tool)
+        else:
+            print(f'\nTools providing {category.name}:')
+            print_choices([tool_or_category_repr(t, category_tools) for t in cat_tools])
+            choice = select_one(cat_tools, optional=True)
+            if choice:
+                select_tools.append(choice)
+
+    tools_set = set(single_tools + select_tools)
     tools = []
     while True:
         for tool in list(tools_set):
@@ -51,7 +85,7 @@ def generate(name: str = None, add: bool = False):
         variables.update(face.get_namespace_dict(face.accepts))
 
     tool_templates = {}
-    for tool in config.tools:
+    for tool in tools:
         tool_templates[tool] = tool.templates()
 
     template_vars = defaultdict(set)
@@ -141,3 +175,16 @@ def tool_interfaces(interfaces) -> set:
 def dialog(prompt) -> str:
     """Format prompt and perform dialog."""
     return input(prompt.capitalize() + ': ')
+
+
+def check_dependencies(tools) -> None:
+    """Check that a set of tools fulfills its dependencies."""
+    for tool in tools:
+        deps = [d for d in tool.depends if isinstance(d, Tool)]
+        assert all([t in tools for t in deps])
+
+    category_tools = gather_categories(tools)
+    categories = [c for c in category_tools.keys() if c is not None]
+    for c in categories:
+        if len(category_tools[c]) > 1:
+            raise ValueError('More than one tool for a category!')

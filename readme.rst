@@ -14,7 +14,7 @@ Create initialisation configurations to fit your own needs.
 .. code:: sh
 
     $ mold --help
-    $ mold python-package
+    $ mold python-library
 
 Mold elsewhere:
 
