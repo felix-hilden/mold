@@ -27,7 +27,9 @@ def configure_show(name: str = None):
         print(f' - {c.name}: {c.description} ({t})')
 
     files = {
-        temp.target_path for tool in config.components for temp in tool.templates()
+        temp.target_path
+        for comp in config.components if isinstance(comp, Tool)
+        for temp in comp.templates()
     }
     parts = {}
     for file in files:
