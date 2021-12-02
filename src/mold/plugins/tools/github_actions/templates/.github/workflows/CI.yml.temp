@@ -15,14 +15,14 @@ jobs:
   matrix:
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: ["3.6", "3.7", "3.8", "3.9"]
     name: Pytest on {{ '${{matrix.python-version}}' }}
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python {{ '${{matrix.python-version}}' }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: {{ '${{matrix.python-version}}' }}
       - name: Install package
@@ -33,14 +33,14 @@ jobs:
         run: pytest
 
   full-build:
-    name: Full 3.9 build
+    name: Full 3.10 build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: "3.10"
       - name: Install package
         run: |
           python -m pip install --upgrade pip

@@ -10,6 +10,7 @@ Mold adheres to `Semantic Versioning <https://semver.org>`_.
 Unreleased
 ----------
 - Update ``rtd_sphinx`` YAML file
+- Update ``github actions`` CI
 
 0.2.1 (2021-09-13)
 ------------------
