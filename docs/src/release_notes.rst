@@ -7,8 +7,8 @@ This release notes format is based on
 `Keep a Changelog <https://keepachangelog.com>`_.
 Mold adheres to `Semantic Versioning <https://semver.org>`_.
 
-Unreleased
-----------
+0.2.2 (2021-12-03)
+------------------
 - Update ``rtd_sphinx`` YAML file
 - Update ``github actions`` CI
 
