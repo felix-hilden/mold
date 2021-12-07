@@ -21,7 +21,7 @@ questions = [Question('readme_description', 'project description')]
 
 def post_dialog():
     description = questions[0].response.strip().capitalize()
-    if description[-1] not in string.punctuation:
+    if description and description[-1] not in string.punctuation:
         description += '.'
     Provides.readme_description = description
 

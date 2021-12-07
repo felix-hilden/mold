@@ -10,6 +10,7 @@ Mold adheres to `Semantic Versioning <https://semver.org>`_.
 Unreleased
 ----------
 - Fix CLI example source
+- Allow empty readme description
 
 0.2.2 (2021-12-03)
 ------------------
