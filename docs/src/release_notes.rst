@@ -7,8 +7,8 @@ This release notes format is based on
 `Keep a Changelog <https://keepachangelog.com>`_.
 Mold adheres to `Semantic Versioning <https://semver.org>`_.
 
-Unreleased
-----------
+0.2.3 (2021-12-07)
+------------------
 - Fix CLI example source
 - Allow empty readme description
 
